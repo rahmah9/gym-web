@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Gym — Banjarbaru</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#D9A11A;--gold-light:#F4C04E;--black:#0B0B0B;--carbon:#141414;--card-bg:#1A1A1A;--white:#F5F5F5;--muted:#888}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'Poppins',sans-serif;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,rgba(11,11,11,0.97)0%,transparent 100%);border-bottom:1px solid rgba(217,161,26,0.15);transition:background .3s}
+nav.scrolled{background:rgba(11,11,11,0.98)!important}
+.nav-logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:3px;color:var(--gold)}
+.nav-logo span{color:var(--white)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:var(--black);padding:10px 22px;font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;font-weight:600;transition:background .2s}
+.nav-cta:hover{background:var(--gold-light)}
+
+/* HERO */
+#hero{height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;background:var(--black)}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80') center/cover;opacity:.18}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(11,11,11,.98)40%,rgba(11,11,11,.7)100%)}
+.diag-stripe{position:absolute;top:0;right:0;width:420px;height:100%;overflow:hidden;pointer-events:none}
+.diag-stripe::before{content:'';position:absolute;top:-20%;right:-60px;width:180px;height:160%;background:repeating-linear-gradient(15deg,var(--gold)0,var(--gold)18px,transparent 18px,transparent 52px);opacity:.28}
+.diag-stripe::after{content:'';position:absolute;top:-20%;right:60px;width:80px;height:160%;background:repeating-linear-gradient(15deg,var(--gold)0,var(--gold)8px,transparent 8px,transparent 36px);opacity:.14}
+.hero-content{position:relative;z-index:2;padding:0 60px;max-width:900px}
+.hero-tag{display:inline-block;border:1px solid var(--gold);color:var(--gold);font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:4px;padding:6px 16px;margin-bottom:28px;text-transform:uppercase}
+.hero-title{font-family:'Anton',sans-serif;font-size:clamp(64px,10vw,120px);line-height:.9;letter-spacing:-1px;text-transform:uppercase;margin-bottom:8px}
+.hero-title .gold{color:var(--gold)}
+.hero-sub{font-family:'Oswald',sans-serif;font-size:clamp(18px,2.5vw,26px);color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:30px;font-weight:400}
+.hero-desc{font-size:15px;color:#aaa;max-width:440px;line-height:1.7;margin-bottom:40px}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:var(--black);padding:14px 32px;font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;transition:all .2s}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--white);padding:14px 32px;font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:2px;text-transform:uppercase;font-weight:600;border:1px solid rgba(255,255,255,.3);cursor:pointer;transition:all .2s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.hero-info{position:absolute;bottom:40px;right:60px;z-index:2;display:flex;gap:20px}
+.info-card{background:rgba(26,26,26,.9);border:1px solid rgba(217,161,26,.3);padding:16px 20px;text-align:center}
+.info-card .label{font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-family:'Oswald',sans-serif;margin-bottom:4px}
+.info-card .val{font-family:'Anton',sans-serif;font-size:16px;letter-spacing:1px}
+
+/* SECTIONS */
+section{padding:100px 60px}
+.section-tag{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.section-title{font-family:'Anton',sans-serif;font-size:clamp(36px,5vw,60px);text-transform:uppercase;line-height:1;margin-bottom:20px}
+.section-title .gold{color:var(--gold)}
+.divider{width:60px;height:3px;background:var(--gold);margin-bottom:40px}
+
+/* STATS */
+#stats{background:var(--carbon);padding:50px 60px;border-top:1px solid rgba(217,161,26,.2);border-bottom:1px solid rgba(217,161,26,.2)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(217,161,26,.1)}
+.stat-item{background:var(--carbon);padding:32px 20px;text-align:center}
+.stat-num{font-family:'Anton',sans-serif;font-size:50px;color:var(--gold);line-height:1}
+.stat-label{font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:6px;font-family:'Oswald',sans-serif}
+
+/* ABOUT */
+#about{background:var(--black)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-img{position:relative;aspect-ratio:4/5;overflow:hidden}
+.about-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%)}
+.about-img::after{content:'';position:absolute;inset:0;border:2px solid var(--gold);transform:translate(12px,12px);pointer-events:none}
+.feature-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:30px}
+.feat-item{display:flex;align-items:center;gap:10px;font-size:14px;color:#ccc}
+.feat-dot{width:6px;height:6px;background:var(--gold);flex-shrink:0}
+
+/* PRICING */
+#pricing{background:var(--carbon)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto}
+.price-card{background:rgba(255,255,255,.03);border:1px solid rgba(217,161,26,.25);padding:36px 28px;text-align:center;transition:all .3s;cursor:default;position:relative}
+.price-card:hover{border-color:var(--gold);transform:translateY(-6px);background:rgba(217,161,26,.05)}
+.price-card.featured{border-color:var(--gold);border-width:2px;background:rgba(217,161,26,.07);transform:scale(1.04)}
+.price-card.featured::before{content:'POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--black);font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:3px;padding:4px 16px;font-weight:700}
+.price-cat{font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(217,161,26,.2)}
+.price-row{margin-bottom:20px}
+.price-tier{font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;font-family:'Oswald',sans-serif;margin-bottom:4px}
+.price-amount{font-family:'Anton',sans-serif;font-size:28px;letter-spacing:1px}
+.price-note{font-size:11px;color:#555;margin-top:24px;font-style:italic}
+
+/* HOURS */
+.hours-center{text-align:center;margin-bottom:60px}
+.hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:700px;margin:0 auto}
+.hour-card{background:var(--card-bg);border:1px solid rgba(217,161,26,.25);padding:40px 32px;text-align:center}
+.hour-icon{font-size:32px;margin-bottom:16px;opacity:.9}
+.hour-label{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.hour-time{font-family:'Anton',sans-serif;font-size:36px;letter-spacing:2px;line-height:1.1}
+.hour-sub{font-size:12px;color:var(--muted);margin-top:8px}
+
+/* FACILITIES */
+#facilities{background:var(--carbon)}
+.fac-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.fac-card{background:rgba(255,255,255,.03);border:1px solid rgba(217,161,26,.15);padding:24px 16px;text-align:center;transition:all .3s}
+.fac-card:hover{border-color:var(--gold);background:rgba(217,161,26,.06);transform:translateY(-4px)}
+.fac-icon{font-size:28px;color:var(--gold);margin-bottom:12px}
+.fac-name{font-size:13px;color:#ccc;font-family:'Oswald',sans-serif;letter-spacing:1px;text-transform:uppercase}
+
+/* GALLERY */
+#gallery{background:var(--black)}
+.gallery-bento{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto;gap:12px}
+.g-item{overflow:hidden;position:relative;background:var(--card-bg);cursor:pointer}
+.g-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease,filter .4s}
+.g-item:hover img{transform:scale(1.08);filter:brightness(.7)}
+.g-item::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(11,11,11,.85)100%);opacity:0;transition:opacity .3s}
+.g-item:hover::after{opacity:1}
+.g-label{position:absolute;bottom:16px;left:16px;font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);z-index:2;opacity:0;transition:opacity .3s}
+.g-item:hover .g-label{opacity:1}
+.g-item.large{grid-column:span 2;grid-row:span 2;aspect-ratio:unset;min-height:400px}
+.g-item.tall{grid-row:span 2;min-height:300px}
+.g-item.wide{grid-column:span 2;aspect-ratio:16/7}
+.g-item.normal{aspect-ratio:4/3}
+
+/* RULES */
+#rules{background:var(--carbon)}
+.rules-header{display:flex;align-items:flex-end;gap:20px;margin-bottom:50px}
+.rules-warning{background:var(--gold);color:var(--black);padding:6px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:3px;font-weight:700;align-self:flex-start;margin-top:8px}
+.rules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rule-card{background:var(--card-bg);border:1px solid rgba(217,161,26,.15);padding:24px;display:flex;gap:16px;align-items:flex-start;transition:all .3s}
+.rule-card:hover{border-color:var(--gold);background:rgba(217,161,26,.05)}
+.rule-num{font-family:'Anton',sans-serif;font-size:40px;color:rgba(217,161,26,.2);line-height:1;min-width:42px}
+.rule-text{font-size:13px;color:#ccc;line-height:1.6;padding-top:6px}
+.sticky-bar{background:rgba(217,161,26,.12);border:1px solid rgba(217,161,26,.3);padding:14px 24px;text-align:center;margin-top:40px;font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:3px;color:var(--gold);text-transform:uppercase}
+
+/* PROGRAMS */
+#programs{background:var(--black)}
+.prog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.prog-card{background:rgba(255,255,255,.03);border:1px solid rgba(217,161,26,.15);padding:32px 24px;transition:all .3s;position:relative;overflow:hidden}
+.prog-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.prog-card:hover::before{transform:scaleX(1)}
+.prog-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.prog-icon{font-size:36px;margin-bottom:16px}
+.prog-name{font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.prog-desc{font-size:13px;color:#888;line-height:1.6}
+
+/* TESTIMONIALS */
+#testimonials{background:var(--carbon)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.testi-card{background:var(--card-bg);border:1px solid rgba(217,161,26,.15);padding:28px}
+.testi-quote{font-size:14px;color:#ccc;line-height:1.7;font-style:italic;margin-bottom:20px}
+.testi-quote::before{content:'"';font-family:'Anton',sans-serif;font-size:50px;color:var(--gold);opacity:.3;display:block;line-height:.7;margin-bottom:12px}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-avatar{width:38px;height:38px;border-radius:50%;background:rgba(217,161,26,.2);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:14px;color:var(--gold)}
+.testi-name{font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase}
+.testi-type{font-size:11px;color:var(--muted)}
+
+/* FAQ */
+#faq{background:var(--black)}
+.faq-wrap{max-width:800px;margin:0 auto}
+.faq-item{border-bottom:1px solid rgba(217,161,26,.15);overflow:hidden}
+.faq-q{padding:22px 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Oswald',sans-serif;font-size:17px;letter-spacing:1px;text-transform:uppercase;color:var(--white);transition:color .2s}
+.faq-q:hover{color:var(--gold)}
+.faq-arrow{font-size:22px;color:var(--gold);transition:transform .3s;user-select:none;font-weight:300}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;font-size:14px;color:#aaa;line-height:1.7}
+.faq-a.open{max-height:200px;padding-bottom:18px}
+.faq-item.active .faq-arrow{transform:rotate(45deg)}
+.faq-item.active .faq-q{color:var(--gold)}
+
+/* LOCATION */
+#location{background:var(--carbon)}
+.loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.loc-map{aspect-ratio:4/3;background:var(--card-bg);border:1px solid rgba(217,161,26,.25);overflow:hidden}
+.loc-map iframe{width:100%;height:100%;border:0;filter:grayscale(60%)contrast(1.1)}
+.loc-detail p{font-size:14px;color:#aaa;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start}
+.loc-detail .loc-icon{color:var(--gold);flex-shrink:0;margin-top:2px}
+.loc-detail h3{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;margin-top:28px}
+.wa-btn{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:14px 28px;font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:2px;text-transform:uppercase;font-weight:700;text-decoration:none;margin-top:24px;transition:opacity .2s}
+.wa-btn:hover{opacity:.85}
+
+/* FOOTER */
+footer{background:#070707;border-top:1px solid rgba(217,161,26,.2);padding:60px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+footer .logo{font-family:'Anton',sans-serif;font-size:24px;letter-spacing:3px;color:var(--gold);margin-bottom:12px}
+footer .logo span{color:var(--white)}
+footer p{font-size:13px;color:#555;line-height:1.7}
+footer h4{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:10px}
+footer ul li a{color:#555;text-decoration:none;font-size:13px;transition:color .2s}
+footer ul li a:hover{color:var(--gold)}
+.footer-bottom{background:#070707;border-top:1px solid rgba(255,255,255,.05);padding:20px 60px;display:flex;justify-content:space-between;align-items:center}
+.footer-bottom p{font-size:12px;color:#333}
+.social-links{display:flex;gap:16px;margin-top:20px}
+.soc{width:36px;height:36px;border:1px solid rgba(217,161,26,.3);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;text-decoration:none;font-family:'Oswald',sans-serif;transition:all .2s}
+.soc:hover{border-color:var(--gold);color:var(--gold)}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:16px 20px}
+  .nav-links{display:none}
+  section{padding:70px 24px}
+  #stats{padding:40px 24px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .about-grid,.loc-grid{grid-template-columns:1fr}
+  .about-img{aspect-ratio:16/9}
+  .about-img::after{display:none}
+  .pricing-grid{grid-template-columns:1fr;max-width:400px}
+  .price-card.featured{transform:scale(1)}
+  .hours-grid{grid-template-columns:1fr;max-width:400px}
+  .fac-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-bento{grid-template-columns:repeat(2,1fr)}
+  .g-item.large{grid-column:span 2;min-height:260px}
+  .g-item.wide{grid-column:span 2}
+  .rules-grid{grid-template-columns:1fr}
+  .prog-grid{grid-template-columns:repeat(2,1fr)}
+  .testi-grid{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr 1fr;padding:40px 24px}
+  .footer-bottom{padding:16px 24px;flex-direction:column;gap:12px;text-align:center}
+  .hero-content{padding:0 24px}
+  .hero-info{right:24px;flex-direction:column;gap:12px}
+}
+@media(max-width:480px){
+  .gallery-bento{grid-template-columns:1fr}
+  .g-item.large,.g-item.wide{grid-column:span 1}
+  footer{grid-template-columns:1fr}
+  .prog-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo">SUMMER <span>GYM</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#pricing">Harga</a></li>
+    <li><a href="#gallery">Galeri</a></li>
+    <li><a href="#facilities">Fasilitas</a></li>
+    <li><a href="#rules">Rules</a></li>
+    <li><a href="#location">Lokasi</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Join Now</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="diag-stripe"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Banjarbaru's Premier Gym</div>
+    <h1 class="hero-title"><span class="gold">SUMMER</span><br>GYM</h1>
+    <p class="hero-sub">Build Your Best Version</p>
+    <p class="hero-desc">Gym modern dengan fasilitas lengkap dan suasana nyaman untuk semua kalangan. Beginner friendly. Woman friendly.</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Join Membership</button>
+      <button class="btn-outline" onclick="document.getElementById('facilities').scrollIntoView({behavior:'smooth'})">Lihat Fasilitas</button>
+    </div>
+  </div>
+  <div class="hero-info">
+    <div class="info-card">
+      <div class="label">Jam Buka</div>
+      <div class="val">08:00 — 22:00</div>
+    </div>
+    <div class="info-card">
+      <div class="label">Woman Only</div>
+      <div class="val">08:00 — 14:00</div>
+      <div>Senin-Kamis</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div id="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Members Aktif</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num">20+</div>
+      <div class="stat-label">Peralatan</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Hari Buka</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num">2+</div>
+      <div class="stat-label">Tahun Berdiri</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img reveal">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAF1ZgBdmsoxxK0GUjltsixEq-3I7esQE9JMVVL4izouusj3rPTbVxUg-oJXbBGWiYGdVZqaDHMo3SuzfpeJXi17BtAwux3SadvqKE_pnoZE5Qor10v6-S5VuXhheSX8r92d_1_YlQ=s1360-w1360-h1020-rw" alt="Summer Gym interior">
+    </div>
+    <div>
+      <div class="section-tag">Tentang Kami</div>
+      <h2 class="section-title reveal">YOUR <span class="gold">ENERGY</span><br>STARTS HERE</h2>
+      <div class="divider"></div>
+      <p style="font-size:14px;color:#aaa;line-height:1.8;margin-bottom:20px" class="reveal">Summer Gym hadir sebagai pilihan gym modern di Banjarbaru dengan peralatan lengkap, suasana nyaman, dan harga yang terjangkau untuk semua kalangan — dari pemula hingga yang sudah berpengalaman.</p>
+      <p style="font-size:14px;color:#aaa;line-height:1.8" class="reveal">Kami berkomitmen untuk menciptakan lingkungan latihan yang aman, bersih, dan menyenangkan — karena kesehatan bukan privilege, tapi hak semua orang.</p>
+      <div class="feature-list reveal">
+        <div class="feat-item"><span class="feat-dot"></span>Alat Lengkap</div>
+        <div class="feat-item"><span class="feat-dot"></span>AC Nyaman</div>
+        <div class="feat-item"><span class="feat-dot"></span>Woman Friendly</div>
+        <div class="feat-item"><span class="feat-dot"></span>Beginner Friendly</div>
+        <div class="feat-item"><span class="feat-dot"></span>Personal Training</div>
+        <div class="feat-item"><span class="feat-dot"></span>Lokasi Strategis</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div style="text-align:center;margin-bottom:60px">
+    <div class="section-tag">Price List</div>
+    <h2 class="section-title reveal">PILIH <span class="gold">PAKET</span> KAMU</h2>
+    <div class="divider" style="margin:0 auto"></div>
+    <p style="font-size:13px;color:#555;margin-top:16px;font-style:italic">*Syarat pelajar: menunjukkan kartu pelajar/mahasiswa yang aktif</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-cat">Perdatang</div>
+      <div class="price-row">
+        <div class="price-tier">Umum</div>
+        <div class="price-amount">Rp 20.000</div>
+      </div>
+      <div class="price-row">
+        <div class="price-tier">Pelajar</div>
+        <div class="price-amount">Rp 15.000</div>
+      </div>
+      <div class="price-note">Per kunjungan, bebas waktu</div>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="price-cat">Perbulan</div>
+      <div class="price-row">
+        <div class="price-tier">Umum</div>
+        <div class="price-amount">Rp 170.000</div>
+      </div>
+      <div class="price-row">
+        <div class="price-tier">Pelajar</div>
+        <div class="price-amount">Rp 150.000</div>
+      </div>
+      <div class="price-note">Akses penuh 30 hari</div>
+    </div>
+    <div class="price-card reveal">
+      <div class="price-cat">Member Baru</div>
+      <div class="price-row">
+        <div class="price-tier">Umum</div>
+        <div class="price-amount">Rp 200.000</div>
+      </div>
+      <div class="price-row">
+        <div class="price-tier">Pelajar</div>
+        <div class="price-amount">Rp 180.000</div>
+      </div>
+      <div class="price-note">Termasuk kartu member</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS -->
+<section id="hours" style="background:var(--black)">
+  <div class="hours-center">
+    <div class="section-tag">Jadwal</div>
+    <h2 class="section-title reveal">JAM <span class="gold">OPERASIONAL</span></h2>
+    <div class="divider" style="margin:0 auto"></div>
+  </div>
+  <div class="hours-grid">
+    <div class="hour-card reveal">
+      <div class="hour-icon">⏰</div>
+      <div class="hour-label">Jam Buka</div>
+      <div class="hour-time">08:00<br>— 22:00</div>
+      <div class="hour-sub">Setiap hari, termasuk hari libur</div>
+    </div>
+    <div class="hour-card reveal" style="border-color:rgba(217,161,26,.45)">
+      <div class="hour-icon">👩</div>
+      <div class="hour-label">Woman Only Hours</div>
+      <div class="hour-time">08:00<br>— 14:00</div>
+      <div class="hour-sub">Senin-Kamis</div>
+    </div>
+  </div>
+</section>
+
+<!-- FACILITIES -->
+<section id="facilities">
+  <div class="section-tag">Fasilitas</div>
+  <h2 class="section-title reveal">SEMUA YANG <span class="gold">KAMU BUTUH</span></h2>
+  <div class="divider"></div>
+  <div class="fac-grid">
+    <div class="fac-card reveal"><div class="fac-icon">🏃</div><div class="fac-name">Cardio Area</div></div>
+    <div class="fac-card reveal"><div class="fac-icon">🏋️</div><div class="fac-name">Dumbbell Lengkap</div></div>
+    <div class="fac-card reveal"><div class="fac-icon">🔩</div><div class="fac-name">Bench Press</div></div>
+    <div class="fac-card reveal"><div class="fac-icon">⬆️</div><div class="fac-name">Squat Rack</div></div>
+    <div class="fac-card reveal"><div class="fac-icon">🚶</div><div class="fac-name">Treadmill</div></div>
+    <div class="fac-card reveal"><div class="fac-icon">🔒</div><div class="fac-name">Locker Room</div></div>
+    <div class="fac-card reveal"><div class="fac-icon">❄️</div><div class="fac-name">AC Room</div></div>
+    <div class="fac-card reveal"><div class="fac-icon">🚿</div><div class="fac-name">Shower</div></div>
+    <div class="fac-card reveal"><div class="fac-icon">🅿️</div><div class="fac-name">Parking Area</div></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-tag">Galeri</div>
+  <h2 class="section-title reveal">LIHAT <span class="gold">GYM KAMI</span></h2>
+  <div class="divider"></div>
+  <div class="gallery-bento">
+    <!-- Large hero -->
+    <div class="g-item large reveal">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAHK6ab1oNS55yE2qPOL01Rvzeub_cC3uu98iZy_Cfi61_K0VWvwGx-XVloPc9BoanjvOLCRG6LQJ8Ylaxi3IzZVvnxYuHo4SqVD5_yi-jSUS_7lGex75yLyTo9-_o6iV9dd2zACI_VgGGY5=s1360-w1360-h1020-rw">
+    </div>
+    <!-- Tall right -->
+    <div class="g-item tall reveal">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAEGTDxRT8QW1nqoXHXh6qZbfr8odvqsbtugY-06wNYeTdV-jSxc1Hi3G4P8_iR8I6oWWsk5jyEEVvqUfUHQG2vCXnvFTw9XE1sq6FVXdCP-SzYk_PdA4YDbfcNOn3Pl8lOiUMoQwccez8Wc=s1360-w1360-h1020-rw" alt="Dumbbell rack">
+      <span class="g-label">Dumbbell Area</span>
+    </div>
+    <!-- Normal -->
+    <div class="g-item normal reveal">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAFWDAA43pdMfToBjs9RfvLOA6xwO575QXJzSM3iEmvxGQzHBWQhSUSPMbm8rF9C1I9B6unffDXH_4H7jGWzJfrXzjQTpBoyNRIc3ywRM1VY6iuvIspqh2z7UUtD5kbODhD1tv32VSbbbe0H=s1360-w1360-h1020-rw" alt="Cardio machines">
+      <span class="g-label">Cardio Zone</span>
+    </div>
+    <!-- Wide bottom -->
+    <div class="g-item wide reveal">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAGIQEwy6L1qUZe8x0FfLhyqJL8awz5fwo0iM7OFOlU3cdV3dMx4ymuq1fsmRLhXq56_0If2sBM-j8OWudZ_fYy6_hsB09fE3tkCszljnUPys7tfs1I3_MTuvgCQmsTFbattTUvOGA=s1360-w1360-h1020-rw" alt="Gym floor">
+      <span class="g-label">Training Floor</span>
+    </div>
+    <!-- Normal -->
+    <div class="g-item normal reveal">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAGA1mhZx26slHA6kPEBepM-sMQZhR8d2xfulZrGJyOxMTyEsj4Wfv8GiCCg-etxN4as1auTILKFmEIfaILBTN1qmuxEquITiLh6oVevMtX_N4rUZPF3GT2eNqwfcBmSt0WnB_zfqYIt-GNI=s1360-w1360-h1020-rw" alt="Workout">
+      <span class="g-label">Kasir</span>
+    </div>
+    <!-- Normal -->
+    <div class="g-item normal reveal">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAEbEia05Wn7E6xjgKCI1OK3cDz0jPH5OvEvD3Xv-wP6w10zmj8fBMsO2SNEjlKIVmkT4DEm_EYabi9OFqkjbrG6QtCj02UW4VOCoNGL4CRAIINvWrXsI0nrE82_BFfsQPY8rxfa1J_esJpY=s1360-w1360-h1020-rw" alt="Weight training">
+      <span class="g-label">2nd Floor</span>
+    </div>
+    <!-- Normal -->
+    <div class="g-item normal reveal">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAGKTMNTY0cVBm5BtkqUKk3nCeLB8Bhl6hSzKBK0cj0F-Q5GyTzLUf85msmLlZU9TKIolZTh0A1C5oNagOfa_4xVLgRwhqyGPQNk2Z-UlBk5CdbhZ6qdZInN93aO2V1gVwTqHHvnqegO82o=s1360-w1360-h1020-rw" alt="Barbell">
+      <span class="g-label">Barbell Section</span>
+    </div>
+    <!-- Normal -->
+    <div class="g-item normal reveal">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAGwKnCYaC2NyAAaxTnhGbGGSm6RSUyWJ5SMid6vlrEPXbgqDgmoR2Nn5twNToeaqtzUbAx982_ZsTMmgjHQkIYjVhYADERwjXLmLMwm3wy65hjGxMC7J2OzIyQ7mZnjE_a4IDTEhg5gyWFz=s1360-w1360-h1020-rw" alt="Women workout">
+      <span class="g-label">Women Class</span>
+    </div>
+  </div>
+  <!-- Lightbox overlay -->
+  <div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;align-items:center;justify-content:center;cursor:pointer" onclick="closeLightbox()">
+    <img id="lb-img" style="max-width:90vw;max-height:90vh;object-fit:contain;border:1px solid rgba(217,161,26,.3)" src="" alt="">
+    <span style="position:absolute;top:24px;right:32px;font-size:32px;color:var(--gold);font-family:Anton,sans-serif;cursor:pointer">✕</span>
+  </div>
+</section>
+
+<!-- RULES -->
+<section id="rules">
+  <div class="rules-header">
+    <div>
+      <div class="section-tag">Tata Tertib</div>
+      <h2 class="section-title reveal">GYM <span class="gold">RULES</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="rules-warning">WAJIB DIPATUHI</div>
+  </div>
+  <div class="rules-grid">
+    <div class="rule-card reveal"><div class="rule-num">01</div><div class="rule-text">Memakai pakaian &amp; sepatu olahraga yang sesuai</div></div>
+    <div class="rule-card reveal"><div class="rule-num">02</div><div class="rule-text">Dilarang memakai sandal atau bertelanjang kaki</div></div>
+    <div class="rule-card reveal"><div class="rule-num">03</div><div class="rule-text">Dilarang merokok atau vaping di dalam area gym</div></div>
+    <div class="rule-card reveal"><div class="rule-num">04</div><div class="rule-text">Dilarang membanting alat gym dengan sembarangan</div></div>
+    <div class="rule-card reveal"><div class="rule-num">05</div><div class="rule-text">Gunakan beban sesuai kemampuan, utamakan keselamatan</div></div>
+    <div class="rule-card reveal"><div class="rule-num">06</div><div class="rule-text">Kembalikan alat ke tempat semula setelah digunakan</div></div>
+    <div class="rule-card reveal"><div class="rule-num">07</div><div class="rule-text">Jaga kebersihan diri dan gunakan deodorant</div></div>
+    <div class="rule-card reveal"><div class="rule-num">08</div><div class="rule-text">Utamakan keselamatan dan kenyamanan bersama</div></div>
+    <div class="rule-card reveal"><div class="rule-num">09</div><div class="rule-text">PT freelance wajib meminta izin kepada management</div></div>
+  </div>
+  <div class="sticky-bar">⚡ Respect the Gym. Respect Others. ⚡</div>
+</section>
+
+<!-- PROGRAMS -->
+<section id="programs" style="background:var(--black)">
+  <div class="section-tag">Program</div>
+  <h2 class="section-title reveal">PROGRAM <span class="gold">LATIHAN</span></h2>
+  <div class="divider"></div>
+  <div class="prog-grid">
+    <div class="prog-card reveal">
+      <div class="prog-icon">🔥</div>
+      <div class="prog-name">Weight Loss</div>
+      <div class="prog-desc">Fat burning &amp; cardio focused program untuk menurunkan berat badan secara efektif.</div>
+    </div>
+    <div class="prog-card reveal">
+      <div class="prog-icon">💪</div>
+      <div class="prog-name">Muscle Building</div>
+      <div class="prog-desc">Hypertrophy training untuk membangun massa otot dengan program terstruktur.</div>
+    </div>
+    <div class="prog-card reveal">
+      <div class="prog-icon">🎯</div>
+      <div class="prog-name">Personal Training</div>
+      <div class="prog-desc">Latihan one-on-one bersama coach berpengalaman untuk hasil yang lebih terarah.</div>
+    </div>
+    <div class="prog-card reveal">
+      <div class="prog-icon">🌸</div>
+      <div class="prog-name">Women Class</div>
+      <div class="prog-desc">Kelas khusus perempuan yang nyaman, privat, dan sesuai kebutuhan.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-tag">Testimoni</div>
+  <h2 class="section-title reveal">KATA <span class="gold">MEREKA</span></h2>
+  <div class="divider"></div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-quote">Gym nyaman banget, alat lengkap, gak terlalu ramai. Worth it banget harganya untuk fasilitas segini.</div>
+      <div class="testi-author"><div class="testi-avatar">AR</div><div><div class="testi-name">Ahmad R.</div><div class="testi-type">Member Aktif · Perbulan</div></div></div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-quote">Woman only hours bikin aku jauh lebih nyaman latihan. Recommended banget buat cewek yang baru mulai gym!</div>
+      <div class="testi-author"><div class="testi-avatar">SF</div><div><div class="testi-name">Sari F.</div><div class="testi-type">Member Baru · Pelajar</div></div></div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-quote">Harga pelajar terjangkau, tempatnya bersih, petugasnya ramah. AC-nya dingin, enak banget latihannya!</div>
+      <div class="testi-author"><div class="testi-avatar">DK</div><div><div class="testi-name">Diki K.</div><div class="testi-type">Member Aktif · Pelajar</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:var(--carbon)">
+  <div style="text-align:center;margin-bottom:60px">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-title reveal">PERTANYAAN <span class="gold">UMUM</span></h2>
+    <div class="divider" style="margin:0 auto"></div>
+  </div>
+  <div class="faq-wrap">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Apakah pemula bisa bergabung?<span class="faq-arrow">+</span></div>
+      <div class="faq-a">Tentu! Summer Gym sangat beginner friendly. Staff kami siap membantu kamu yang baru mulai gym dan membutuhkan panduan dasar.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Apakah ada personal trainer?<span class="faq-arrow">+</span></div>
+      <div class="faq-a">Ada. Kamu bisa request personal training session dengan trainer kami. Hubungi admin via WhatsApp untuk informasi jadwal dan harga.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Apakah wanita nyaman latihan di sini?<span class="faq-arrow">+</span></div>
+      <div class="faq-a">Sangat nyaman! Kami punya Woman Only Hours setiap hari pukul 08:00–14:00 khusus untuk anggota perempuan, sehingga kamu bisa latihan dengan lebih privat dan nyaman.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Apakah buka setiap hari termasuk hari libur?<span class="faq-arrow">+</span></div>
+      <div class="faq-a">Ya, Summer Gym buka setiap hari dari pukul 08:00 hingga 22:00, termasuk hari libur nasional.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Bagaimana cara daftar member?<span class="faq-arrow">+</span></div>
+      <div class="faq-a">Kamu bisa langsung datang ke lokasi gym kami atau hubungi kami via WhatsApp untuk informasi pendaftaran. Proses daftarnya cepat dan mudah!</div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location" style="background:var(--black)">
+  <div class="section-tag">Lokasi</div>
+  <h2 class="section-title reveal">TEMUKAN <span class="gold">KAMI</span></h2>
+  <div class="divider"></div>
+  <div class="loc-grid">
+    <div class="loc-map reveal">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.4!2d114.834!3d-3.456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMjMnMjEuNiJTIDExNMKwNTAnMDIuNCJF!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="loc-detail">
+      <h3>Alamat</h3>
+      <p><span class="loc-icon">📍</span>Jl. Panglima Batur, Komp. Ruko Awiyah (samping swalayan Azzahra), Banjarbaru, Kalimantan Selatan</p>
+      <h3>Jam Operasional</h3>
+      <p><span class="loc-icon">🕐</span>Senin — Minggu: 08:00 — 22:00</p>
+      <p><span class="loc-icon">👩</span>Woman Only: 08:00 — 14:00</p>
+      <h3>Hubungi Kami</h3>
+      <p><span class="loc-icon">📱</span>Instagram: @summergym</p>
+      <p><span class="loc-icon">📱</span>TikTok: @summergym</p>
+      <a href="https://wa.me/62" class="wa-btn">💬 Hubungi via WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="logo">SUMMER <span>GYM</span></div>
+    <p>Gym modern dengan fasilitas lengkap untuk semua kalangan di Banjarbaru. Build your best version setiap hari bersama kami.</p>
+    <div class="social-links">
+      <a href="#" class="soc">IG</a>
+      <a href="#" class="soc">TT</a>
+      <a href="#" class="soc">WA</a>
+    </div>
+  </div>
+  <div>
+    <h4>Menu</h4>
+    <ul>
+      <li><a href="#about">Tentang</a></li>
+      <li><a href="#pricing">Harga</a></li>
+      <li><a href="#gallery">Galeri</a></li>
+      <li><a href="#facilities">Fasilitas</a></li>
+      <li><a href="#programs">Program</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Info</h4>
+    <ul>
+      <li><a href="#rules">Gym Rules</a></li>
+      <li><a href="#hours">Jam Buka</a></li>
+      <li><a href="#testimonials">Testimoni</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#location">Lokasi</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Jam Buka</h4>
+    <p style="font-size:13px;color:#555;margin-bottom:8px">Setiap Hari<br>08:00 — 22:00</p>
+    <p style="font-size:13px;color:#555">Woman Only<br>08:00 — 14:00</p>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2025 Summer Gym. All rights reserved.</p>
+  <p style="color:#333;font-size:12px">Jl. Panglima Batur, Banjarbaru</p>
+</div>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60)
+});
+
+// FAQ accordion
+function toggleFaq(el){
+  const item=el.parentElement;
+  const ans=item.querySelector('.faq-a');
+  const isOpen=item.classList.contains('active');
+  document.querySelectorAll('.faq-item').forEach(i=>{
+    i.classList.remove('active');
+    i.querySelector('.faq-a').classList.remove('open');
+  });
+  if(!isOpen){item.classList.add('active');ans.classList.add('open')}
+}
+
+// Scroll reveal
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+  });
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Gallery lightbox
+document.querySelectorAll('.g-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const src=item.querySelector('img').src;
+    document.getElementById('lb-img').src=src;
+    const lb=document.getElementById('lightbox');
+    lb.style.display='flex';
+    document.body.style.overflow='hidden';
+  });
+});
+function closeLightbox(){
+  document.getElementById('lightbox').style.display='none';
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+</script>
+</body>
+</html>
